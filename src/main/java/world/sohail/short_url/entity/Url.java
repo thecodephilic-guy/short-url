@@ -2,6 +2,8 @@ package world.sohail.short_url.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
+import org.hibernate.generator.EventType;
 
 import java.time.OffsetDateTime;
 
@@ -19,11 +21,17 @@ public class Url {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
+    @Generated(event = EventType.INSERT)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
     protected Url() {}
+
+    public Url(String shortCode, String longUrl, User user){
+        this.shortCode = shortCode;
+        this.longUrl = longUrl;
+        this.user = user;
+    }
 
     public User getUser() {
         return user;

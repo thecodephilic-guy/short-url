@@ -13,20 +13,56 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
-    @Generated(event = EventType.INSERT)
-    @JdbcTypeCode(SqlTypes.UUID)
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false, length = Integer.MAX_VALUE)
     private String name;
 
-    @Column(nullable = false, unique = true, columnDefinition = "CITEXT")
+    @Column(name = "email", nullable = false, unique = true, columnDefinition = "CITEXT")
     private String email;
 
     @Generated(event = EventType.INSERT)
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     protected User() {}
+
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
 }
